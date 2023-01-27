@@ -1,22 +1,20 @@
 package gui;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import javax.swing.table.AbstractTableModel;
 
 public class model extends AbstractTableModel {
 	
 
-	String[] columnNames = {"Vname", 0, 15, 7}; 
+	String[] columnNames = {"1", "2", "3", "4","5","6","7","8","9","10","11","12","13","14","15"}; 
 
 	ArrayList<prozess> data = new ArrayList<>(
 
 			Arrays.asList(
 
-			new prozess("Peter", "Mustermann", "TG12/1"),
-
-			new prozess("Sandra", "Schmidt","TG12/1"),
-
-			new prozess("Tobias", "Müller","TG12/3")
-
+			new prozess("Prozess", "0", "5", "8")
 			)
 
 			);
@@ -38,11 +36,11 @@ public class model extends AbstractTableModel {
 				
 			switch (col) {
 			case 0:
-			 return data.get(row).vorname;
+				return data.get(row).Prozessname;
 			case 1:
-				 return data.get(row).nachname;
+				 return data.get(row).Wartezeit;
 			case 2:
-				 return data.get(row).klasse;
+				 return data.get(row).Priorität;
 			}
 			return null;
 						
@@ -61,16 +59,16 @@ public class model extends AbstractTableModel {
 			}
 
 			public void setValueAt(Object value, int row, int col) {
-				Person p = data.get(row);
+				prozess p = data.get(row);
 				switch (col) {
 				case 0:
-					p.vorname = (String) value;
+					p.Prozessname = (String) value;
 					break;
 				 case 1:
-					p.nachname = (String) value;
+					p.Wartezeit = (String) value;
 					break;
 				case 2:
-					p.klasse = (String) value; 
+					p.Priorität = (String) value; 
 					break;
 				}
 			
@@ -78,7 +76,7 @@ public class model extends AbstractTableModel {
 
 			public void appendEmptyRow() {
 				// TODO Auto-generated method stub
-				data.add(new Person("","",""));
+				data.add(new prozess("","","",""));
 				int count = getRowCount();
 				fireTableRowsInserted(0, count);
 			}	

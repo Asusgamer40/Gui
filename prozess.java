@@ -1,10 +1,15 @@
 package gui;
 
 public class prozess {
-	public void Prozess(String name, int AZ, int Prio, int RZ) {
-		String Prozessname = name;
-		int Ankunftszeit = AZ;
-		int Priorität = Prio;
-		int Rechenzeit = RZ;
+	String Prozessname;
+	String Wartezeit;
+	String Priorität;
+	String Rechenzeit;
+
+	public prozess(String name, String WZ, String Prio, String RZ) {
+		this.Prozessname = name;
+		this.Wartezeit = WZ;
+		this.Priorität = Prio;
+		this.Rechenzeit = RZ;
 	}
 }

@@ -5,6 +5,7 @@ public class app {
 		
 		model m = new model();
 		view v = new view();
+		prozess p = new prozess(null, null, null, null);
 		controller c = new controller(m, v);
 		c.initController();
 		v.setVisible(true);
