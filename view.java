@@ -1,23 +1,10 @@
 package gui;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import java.awt.BorderLayout;
-import javax.swing.JTable;
-import javax.swing.JButton;
-import javax.swing.JSplitPane;
-import javax.swing.JProgressBar;
-import java.awt.GridLayout;
-import java.awt.FlowLayout;
+import java.awt.*;
+import javax.swing.*;
+import javax.swing.table.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JInternalFrame;
-import javax.swing.JTextField;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JLabel;
-import javax.swing.JCheckBox;
-import javax.swing.table.DefaultTableModel;
 
 public class view extends JFrame {
 	private JButton AddProcessBTN; 
@@ -31,8 +18,7 @@ public class view extends JFrame {
 	private JComboBox comboBox_3;
 	private JComboBox comboBox_4;
 	private JComboBox comboBox_5;
-	private JComboBox comboBox_6;
-	
+	private JButton runBTN;
 	
 	public view() {
 		getContentPane().setLayout(new BorderLayout(0, 0));
@@ -46,7 +32,7 @@ public class view extends JFrame {
 		splitPane.setResizeWeight(0.27);
 		panel.add(splitPane, BorderLayout.SOUTH);
 		
-		JButton runBTN = new JButton("Run");
+		runBTN = new JButton("Run");
 		splitPane.setLeftComponent(runBTN);
 		
 		JProgressBar progressBar = new JProgressBar();
@@ -222,10 +208,6 @@ public class view extends JFrame {
 		comboBox_4.setModel(new DefaultComboBoxModel(new String[] {"-Calculatingtime 3-", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"}));
 		panel_2.add(comboBox_4);
 		
-		comboBox_6 = new JComboBox();
-		comboBox_6.setModel(new DefaultComboBoxModel(new String[] {"-Waitingtime 3-", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}));
-		panel_2.add(comboBox_6);
-		
 		JLabel label = new JLabel("");
 		panel_2.add(label);
 		
@@ -265,11 +247,11 @@ public class view extends JFrame {
 	public JComboBox getcomboBox_5() {
 		return comboBox_5;
 	}
-	public JComboBox getcomboBox_6() {
-		return comboBox_6;
-	}
 	public JTextField gettxtprocessname() {
 		return txtprocessname;
+	}
+	public JButton getrunBTN() {
+		return runBTN;
 	}
 }
 
