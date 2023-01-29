@@ -2,14 +2,14 @@ package gui;
 
 public class prozess {
 	String Prozessname;
-	String Wartezeit1;
-	String Wartezeit2;
-	String Priorität;
-	String Rechenzeit1;
-	String Rechenzeit2;
-	String Rechenzeit3;
+	int Wartezeit1;
+	int Wartezeit2;
+	int Priorität;
+	int Rechenzeit1;
+	int Rechenzeit2;
+	int Rechenzeit3;
 
-	public prozess(String name, String w1, String w2, String r1, String r2, String r3, String prio) {
+	public prozess(String name, int w1, int w2, int r1, int r2, int r3, int prio) {
 		this.Prozessname = name;
 		this.Wartezeit1 = w1;
 		this.Wartezeit2 = w2;

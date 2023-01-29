@@ -1,10 +1,21 @@
 package gui;
 
-import java.awt.*;
-import javax.swing.*;
-import javax.swing.table.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.JSplitPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableModel;
 
 public class view extends JFrame {
 	private JButton AddProcessBTN; 
@@ -19,10 +30,15 @@ public class view extends JFrame {
 	private JComboBox comboBox_4;
 	private JComboBox comboBox_5;
 	private JButton runBTN;
+	private JLabel lblNewLabel_16;
+	private JLabel lblNewLabel_17;
+	private JLabel lblNewLabel_18;
+	private JTable table;
+	private DefaultTableModel DTM;
 	
 	public view() {
 		getContentPane().setLayout(new BorderLayout(0, 0));
-		setBounds(1920/2-250, 1080/2-200, 500, 400);
+		setBounds(1920/2-250, 1080/2-200, 750, 500);
 		
 		JPanel panel = new JPanel();
 		getContentPane().add(panel, BorderLayout.CENTER);
@@ -48,48 +64,71 @@ public class view extends JFrame {
 		panel_1.setLayout(null);
 		
 		AddProcessBTN = new JButton("Add Process");
-		AddProcessBTN.setBounds(0, 11, 120, 23);
+		AddProcessBTN.setBounds(0, 109, 120, 23);
 		panel_1.add(AddProcessBTN);
 		
 		AddProcessBTN_1 = new JButton("Remove Process");
 		
-		AddProcessBTN_1.setBounds(0, 60, 120, 23);
+		AddProcessBTN_1.setBounds(0, 143, 120, 23);
 		panel_1.add(AddProcessBTN_1);
 		
 		JPanel panel_3 = new JPanel();
 		splitPane_1.setRightComponent(panel_3);
 		panel_3.setLayout(null);
+		DTM = new DefaultTableModel(
+				new String[][] {
+					{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "","", "",""},
+					{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "","", "",""},
+					{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "","", "",""},
+					{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "","", "",""},
+					{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "","", "",""},
+					{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "","", "",""}
+				},
+				new String[] {
+					"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"
+				});
 		
-		JTable table = new JTable();
+		table = new JTable(DTM);
 		table.setRowSelectionAllowed(false);
-		table.setBounds(0, 27, 358, 48);
+		table.setBounds(0, 27, 475, 135);
 		panel_3.add(table);
 		table.setCellSelectionEnabled(true);
 		table.setColumnSelectionAllowed(true);
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, "", null, null, null, null, null, null, null, null, null, null, null, null, null},
+				{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "","", "",""},
+				{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "","", "",""},
+				{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "","", "",""},
+				{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "","", "",""},
+				{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "","", "",""},
+				{"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "","", "",""}
 			},
 			new String[] {
-				"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"
+				"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"
 			}
-		) {
-			Class[] columnTypes = new Class[] {
-				String.class, String.class, String.class, String.class, String.class, String.class, String.class, String.class, String.class, String.class, String.class, String.class, String.class, String.class, String.class, String.class
-			};
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-			boolean[] columnEditables = new boolean[] {
-				false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
-			};
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
-		
+		));
+		table.getColumnModel().getColumn(0).setPreferredWidth(20);
+		table.getColumnModel().getColumn(1).setPreferredWidth(20);
+		table.getColumnModel().getColumn(2).setPreferredWidth(20);
+		table.getColumnModel().getColumn(3).setPreferredWidth(20);
+		table.getColumnModel().getColumn(4).setPreferredWidth(20);
+		table.getColumnModel().getColumn(5).setPreferredWidth(20);
+		table.getColumnModel().getColumn(6).setPreferredWidth(20);
+		table.getColumnModel().getColumn(7).setPreferredWidth(20);
+		table.getColumnModel().getColumn(8).setPreferredWidth(20);
+		table.getColumnModel().getColumn(9).setPreferredWidth(20);
+		table.getColumnModel().getColumn(10).setPreferredWidth(22);
+		table.getColumnModel().getColumn(11).setPreferredWidth(22);
+		table.getColumnModel().getColumn(12).setPreferredWidth(22);
+		table.getColumnModel().getColumn(13).setPreferredWidth(22);
+		table.getColumnModel().getColumn(14).setPreferredWidth(22);
+		table.getColumnModel().getColumn(15).setPreferredWidth(22);
+		table.getColumnModel().getColumn(16).setPreferredWidth(22);
+		table.getColumnModel().getColumn(17).setPreferredWidth(22);
+		table.getColumnModel().getColumn(18).setPreferredWidth(22);
+		table.getColumnModel().getColumn(19).setPreferredWidth(22);
+		table.getColumnModel().getColumn(20).setPreferredWidth(22);
+
 		JLabel lblNewLabel_1 = new JLabel("1");
 		lblNewLabel_1.setBounds(30, 11, 10, 14);
 		panel_3.add(lblNewLabel_1);
@@ -153,22 +192,38 @@ public class view extends JFrame {
 		JLabel lblNewLabel_15 = new JLabel("15");
 		lblNewLabel_15.setBounds(338, 11, 20, 14);
 		panel_3.add(lblNewLabel_15);
-		table.getColumnModel().getColumn(0).setPreferredWidth(20);
-		table.getColumnModel().getColumn(1).setPreferredWidth(20);
-		table.getColumnModel().getColumn(2).setPreferredWidth(20);
-		table.getColumnModel().getColumn(3).setPreferredWidth(20);
-		table.getColumnModel().getColumn(4).setPreferredWidth(20);
-		table.getColumnModel().getColumn(5).setPreferredWidth(20);
-		table.getColumnModel().getColumn(6).setPreferredWidth(20);
-		table.getColumnModel().getColumn(7).setPreferredWidth(20);
-		table.getColumnModel().getColumn(8).setPreferredWidth(20);
-		table.getColumnModel().getColumn(9).setPreferredWidth(20);
-		table.getColumnModel().getColumn(10).setPreferredWidth(22);
-		table.getColumnModel().getColumn(11).setPreferredWidth(22);
-		table.getColumnModel().getColumn(12).setPreferredWidth(22);
-		table.getColumnModel().getColumn(13).setPreferredWidth(22);
-		table.getColumnModel().getColumn(14).setPreferredWidth(22);
-		table.getColumnModel().getColumn(15).setPreferredWidth(22);
+		
+		lblNewLabel_16 = new JLabel("");
+		lblNewLabel_16.setBounds(481, 27, 50, 14);
+		panel_3.add(lblNewLabel_16);
+		
+		lblNewLabel_17 = new JLabel("");
+		lblNewLabel_17.setBounds(481, 59, 50, 14);
+		panel_3.add(lblNewLabel_17);
+		
+		lblNewLabel_18 = new JLabel("");
+		lblNewLabel_18.setBounds(481, 91, 50, 14);
+		panel_3.add(lblNewLabel_18);
+		
+		JLabel lblNewLabel_19 = new JLabel("16");
+		lblNewLabel_19.setBounds(358, 11, 20, 14);
+		panel_3.add(lblNewLabel_19);
+		
+		JLabel lblNewLabel_19_1 = new JLabel("17");
+		lblNewLabel_19_1.setBounds(382, 11, 20, 14);
+		panel_3.add(lblNewLabel_19_1);
+		
+		JLabel lblNewLabel_19_2 = new JLabel("18");
+		lblNewLabel_19_2.setBounds(403, 11, 20, 14);
+		panel_3.add(lblNewLabel_19_2);
+		
+		JLabel lblNewLabel_19_3 = new JLabel("19");
+		lblNewLabel_19_3.setBounds(430, 11, 20, 14);
+		panel_3.add(lblNewLabel_19_3);
+		
+		JLabel lblNewLabel_19_4 = new JLabel("20");
+		lblNewLabel_19_4.setBounds(455, 11, 20, 14);
+		panel_3.add(lblNewLabel_19_4);
 		
 		internalFrame = new JInternalFrame("Process");
 		panel.add(internalFrame, BorderLayout.NORTH);
@@ -252,6 +307,28 @@ public class view extends JFrame {
 	}
 	public JButton getrunBTN() {
 		return runBTN;
+	}
+	public void setlblNewLabel_16(String name) {
+		lblNewLabel_16.setText(name);
+	}
+	public void setlblNewLabel_17(String name) {
+		lblNewLabel_17.setText(name);
+	}
+	public void setlblNewLabel_18(String name) {
+		lblNewLabel_18.setText(name);
+	}
+	public JTable getTable() {
+		return table;
+	}
+	public DefaultTableModel getDTM() {
+		return DTM;
+	}
+	public void setDTM(Object[][]inhalt) {
+		DTM = new DefaultTableModel(
+				inhalt,
+				new String[] {
+					"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"
+				});
 	}
 }
 

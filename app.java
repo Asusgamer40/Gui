@@ -3,9 +3,9 @@ package gui;
 public class app {
 	public static void main (String[] args) {
 		
-		model m = new model();
 		view v = new view();
-		prozess p = new prozess(null, null, null, null, null, null, null);
+		model m = new model(v);
+		prozess p = new prozess(null, 0, 0, 0, 0, 0, 0);
 		controller c = new controller(m, v, p);
 		c.initController();
 		v.setVisible(true);
