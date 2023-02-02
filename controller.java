@@ -9,45 +9,14 @@ public class controller {
 	int a;
 	private view v;
 	private model m;
-	private prozess p;
-	String name;
-	int r1;
-	int r2;
-	int r3;
-	int w1;
-	int w2;
-	int prio;
+	
 	String var1;
 	String var2;
 	String var3;
-	String calculating;
-	Boolean waiting1;
-	Boolean mustwait1;
-	Boolean waiting2;
-	Boolean mustwait2;
-	Boolean waiting3;
-	Boolean mustwait3;
-	int P1;
-	int P2;
-	int P3;
-	int RZ1;
-	int RZ2;
-	int RZ3;
-	int WZ1;
-	int WZ2;
-	int WZ3;
-	int WZ1_1;
-	int WZ2_1;
-	int WZ3_1;
 	
-
-
-	
-	
-	public controller(model m, view v, prozess p) {
+	public controller(model m, view v) {
 		this.m = m;
 		this.v = v;
-		this.p = p;
 
 	}
 
@@ -59,19 +28,10 @@ public class controller {
 		m.setProzesse(new prozess("",0,0,0,0,0,0));
 		m.setProzesse(new prozess("",0,0,0,0,0,0));
 		m.setProzesse(new prozess("",0,0,0,0,0,0));
-		P1 = m.getProzesse(0).Priorität;
-		P2 = m.getProzesse(1).Priorität;
-		P3 = m.getProzesse(2).Priorität;
-		RZ1 = m.getProzesse(0).Rechenzeit3;
-		RZ2 = m.getProzesse(1).Rechenzeit3;
-		RZ3 = m.getProzesse(2).Rechenzeit3;
-		WZ1 = m.getProzesse(0).Wartezeit2;
-		WZ2 = m.getProzesse(1).Wartezeit2;
-		WZ3 = m.getProzesse(2).Wartezeit2;
-		WZ1_1 = m.getProzesse(0).Wartezeit1;
-		WZ2_1 = m.getProzesse(1).Wartezeit1;
-		WZ3_1 = m.getProzesse(2).Wartezeit1;
+		
+		
 		m.getProzessearray().clear();
+		
 	
 		
 		
@@ -87,39 +47,35 @@ public class controller {
 		});
 		v.getbtnNewButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				name = v.gettxtprocessname().getText();
-				r1 =  v.getcomboBox_1().getSelectedIndex();
-				w1 =  v.getcomboBox_2().getSelectedIndex()-1;
-				r2 =  v.getcomboBox_3().getSelectedIndex()-1;
-				w2 =  v.getcomboBox_4().getSelectedIndex()-1;
-				r3 =  v.getcomboBox_5().getSelectedIndex()-1;
-				prio = v.getcomboBox().getSelectedIndex();
-				
-				if(r1 != 0 && prio != 0 && name != "") {
+								
+				if(v.getcomboBox_1().getSelectedIndex() != 0 && v.getcomboBox().getSelectedIndex() != 0 && v.gettxtprocessname().getText() != "") {
 						if(a < 3) {
-							prozess p1 = new prozess(name, w1, w2, r1, r2, r3, prio);
+							prozess p1 = new prozess(v.gettxtprocessname().getText(), v.getcomboBox_2().getSelectedIndex()-1, v.getcomboBox_4().getSelectedIndex()-1, v.getcomboBox_1().getSelectedIndex(), v.getcomboBox_3().getSelectedIndex()-1, v.getcomboBox_5().getSelectedIndex()-1, v.getcomboBox().getSelectedIndex());
 							m.setProzesse(p1);
-							//System.out.println("Prozess:"+m.getProzesse(a).Prozessname+"Priorität:"+m.getProzesse(a).Priorität);
-							a++;
-							v.getcomboBox_1().getModel().setSelectedItem("");
-							v.getcomboBox_2().getModel().setSelectedItem("");
-							v.getcomboBox_3().getModel().setSelectedItem("");
-							v.getcomboBox_4().getModel().setSelectedItem("");
-							v.getcomboBox_5().getModel().setSelectedItem("");
-							v.getcomboBox().getModel().setSelectedItem("");
-							v.gettxtprocessname().setText("");		
+							m.getProzesse(a).resetRechnetSeit();
+							a++;		
 						
 						switch(a) {
 						case 1:
-							v.setlblNewLabel_16(name);
+							String text = v.gettxtprocessname().getText();
+							v.setlblNewLabel_16(text);
 							break;
 						case 2:
-							v.setlblNewLabel_17(name);
+							String text1 = v.gettxtprocessname().getText();
+							v.setlblNewLabel_17(text1);
 							break;
 						case 3:
-							v.setlblNewLabel_18(name);
+							String text2 = v.gettxtprocessname().getText();
+							v.setlblNewLabel_18(text2);
 							break;
 						}
+						v.getcomboBox_1().getModel().setSelectedItem("");
+						v.getcomboBox_2().getModel().setSelectedItem("");
+						v.getcomboBox_3().getModel().setSelectedItem("");
+						v.getcomboBox_4().getModel().setSelectedItem("");
+						v.getcomboBox_5().getModel().setSelectedItem("");
+						v.getcomboBox().getModel().setSelectedItem("");
+						v.gettxtprocessname().setText("");
 						}
 					}
 				else {
@@ -134,61 +90,17 @@ public class controller {
 					int o;
 					for(o = 0; o < 21; o++) {
 						
-						scheduler();
+						scheduler(o);
 						
-						if(calculating == "Prozess1") {
-							var1 = "X";
-							P1 = P1-2;
-						}
-						else if(calculating == "Prozess2") {
-							var2 = "X";
-							P2 = P2-2;
-						}
-						else if(calculating == "Prozess3") {
-							var3 = "X";
-							P3 = P3-2;
-						}
-						
-						if(waiting1 == true) {
-							var1 = "I";
-							if(WZ1 != 0) {
-								WZ1--;
-							}
-							else if(WZ1_1 !=0) {
-								WZ1_1--;
-							}
-						}
-						if(mustwait1 == true) {
-							var1 = "O";
-						}
-						if(waiting2 == true) {
-							var2 = "I";
-							if(WZ2 != 0) {
-								WZ2--;
-							}
-							else if(WZ2_1 !=0) {
-								WZ2_1--;
-							}
-						}
-						if(mustwait2 == true) {
-							var2 = "O";
-						}
-						if(waiting3 == true) {
-							var3 = "I";
-							if(WZ3 != 0) {
-								WZ3--;
-							}
-							else if(WZ3_1 !=0) {
-								WZ3_1--;
-							}
-						}
-						if(mustwait3 == true) {
-							var3 = "O";
-						}
+						var1 = m.getProzesse(0).state;
+						var2 = m.getProzesse(1).state;
+						var3 = m.getProzesse(2).state;
 						
 						fillblock(o, var1, var2, var3);
-						//wait1s();
+						//waitXs(2);
 						}
+					
+					
 					for(int ü = 0; ü < 6; ü++) {
 						for(int ö = 0; ö < 21; ö++) {
 							System.out.print(m.getinhalt(ü, ö)); 
@@ -200,9 +112,9 @@ public class controller {
 		
 	}
 	
-	public void wait1s() {
+	public void waitXs(int x) {
 		try {
-			TimeUnit. SECONDS. sleep(1);
+			TimeUnit. SECONDS. sleep(x);
 		} catch (InterruptedException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -215,57 +127,96 @@ public class controller {
 		m.setinhalt(4, time, text3);
 	}	
 	
-	public void scheduler() {
-		if(P1 > P2 && P1 >  P3){
-			calculating = "Prozess1";
+	public void scheduler(int o) {
+		
+		System.out.print(m.getProzesse(0).rechnetSeit);
+		System.out.print(m.getProzesse(1).rechnetSeit);
+		System.out.print(m.getProzesse(2).rechnetSeit);
+		System.out.println();
+		
+		if(m.getProzesse(0).rechnetSeit != 5 && m.getProzesse(0).Priorität > m.getProzesse(1).Priorität && m.getProzesse(0).Priorität > m.getProzesse(2).Priorität && m.getProzesse(0).Rechenzeit1 != 0) {
+			
+			
+				m.getProzesse(0).setState("X");
+				m.getProzesse(1).setState("O");
+				m.getProzesse(2).setState("O");
+				
+				m.getProzesse(0).verringereRechenzeit();
+			
+				m.getProzesse(0).erhöheRechnetSeit();
+				
+				m.getProzesse(1).resetRechnetSeit();
+				m.getProzesse(2).resetRechnetSeit();
+			
+				if(m.getProzesse(1).Wartezeit1 != 0 && m.getProzesse(1).Wartezeit2 != 0) {
+					m.getProzesse(1).setState("I");
+					m.getProzesse(1).verringereWartzeit();
+				}
+				else if(m.getProzesse(2).Wartezeit1 != 0 && m.getProzesse(2).Wartezeit2 != 0){
+					m.getProzesse(2).setState("I");
+					m.getProzesse(2).verringereWartzeit();
+				}
+			
 		}
-		else if(P2 > P1 && P2 >  P3){
-			calculating = "Prozess2";
+		else if(m.getProzesse(1).rechnetSeit != 5 && m.getProzesse(1).Priorität > m.getProzesse(2).Priorität && m.getProzesse(1).Priorität > m.getProzesse(0).Priorität && m.getProzesse(1).Rechenzeit1 != 0) {
+
+			
+				m.getProzesse(0).setState("O");
+				m.getProzesse(1).setState("X");
+				m.getProzesse(2).setState("O");
+				
+				m.getProzesse(1).verringereRechenzeit();
+			
+				m.getProzesse(1).erhöheRechnetSeit();
+				m.getProzesse(1).veringerePrio();
+				
+				m.getProzesse(0).resetRechnetSeit();
+				m.getProzesse(2).resetRechnetSeit();
+			
+				if(m.getProzesse(0).Wartezeit1 != 0 && m.getProzesse(0).Wartezeit2 != 0) {
+					m.getProzesse(0).setState("I");
+					m.getProzesse(0).verringereWartzeit();
+				}
+				else if(m.getProzesse(2).Wartezeit1 != 0 && m.getProzesse(2).Wartezeit2 != 0){
+					m.getProzesse(2).setState("I");
+					m.getProzesse(2).verringereWartzeit();
+				}
+			
 		}
-		else if(P3 > P1 && P3 >  P2){
-			calculating = "Prozess3";
+		else if(m.getProzesse(2).rechnetSeit != 5 && m.getProzesse(2).Priorität > m.getProzesse(0).Priorität && m.getProzesse(2).Priorität > m.getProzesse(1).Priorität && m.getProzesse(2).Rechenzeit1 != 0) {
+
+			
+				m.getProzesse(0).setState("O");
+				m.getProzesse(1).setState("O");
+				m.getProzesse(2).setState("X");
+				
+				m.getProzesse(2).verringereRechenzeit();
+			
+				m.getProzesse(2).erhöheRechnetSeit();
+				m.getProzesse(2).veringerePrio();
+				
+				m.getProzesse(1).resetRechnetSeit();
+				m.getProzesse(0).resetRechnetSeit();
+			
+				if(m.getProzesse(1).Wartezeit1 != 0 && m.getProzesse(1).Wartezeit2 != 0) {
+				m.getProzesse(1).setState("I");
+				m.getProzesse(1).verringereWartzeit();
+				}
+				else if(m.getProzesse(0).Wartezeit1 != 0 && m.getProzesse(0).Wartezeit2 != 0){
+					m.getProzesse(0).setState("I");
+					m.getProzesse(0).verringereWartzeit();
+				}
 		}
-		if(calculating != "Prozess1") {
-			if(WZ1 != 0 || WZ1_1 != 0) {
-				waiting1 = true;
-				mustwait1 = false;
+		if(o !=  0) {
+			if(m.getProzesse(0).state != "X" && m.getinhalt(0, o-1) == "X") {
+				m.getProzesse(0).veringerePrio();
 			}
-			else if(WZ1 == 0 && WZ1_1 == 0) {
-				mustwait1 = true;
-				waiting1 = false;
+			if(m.getProzesse(1).state != "X" && m.getinhalt(2, o-1) == "X") {
+				m.getProzesse(1).veringerePrio();
 			}
-		}
-		else if(calculating == "Prozess1") {
-			mustwait1 = false;
-			waiting1 = false;
-		}
-		if(calculating != "Prozess2") {
-			if(WZ2 != 0 || WZ2_1 != 0) {
-				waiting2 = true;
-				mustwait2 = false;
+			if(m.getProzesse(2).state != "X" && m.getinhalt(4, o-1) == "X") {
+				m.getProzesse(2).veringerePrio();
 			}
-			else if(WZ2 == 0 && WZ2_1 == 0){
-				mustwait2 = true;
-				waiting2 = false;
-			}
-		}
-		else if(calculating == "Prozess2") {
-			mustwait2 = false;
-			waiting2 = false;
-		}
-		if(calculating != "Prozess3") {
-			if(WZ3 != 0 || WZ3_1 != 0) {
-				waiting3 = true;
-				mustwait3 = false;
-			}
-			else if(WZ3 == 0 && WZ3_1 == 0){
-				mustwait3 = true;
-				waiting3 = false;
-			}
-		}
-		else if(calculating == "Prozess3") {
-			mustwait3 = false;
-			waiting3 = false;
 		}
 	}
 
