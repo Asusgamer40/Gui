@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 
 public class controller {
 	
+	int o;
 	int a;
 	private view v;
 	private model m;
@@ -87,7 +88,7 @@ public class controller {
 
 		v.getrunBTN().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-					int o;
+					
 					for(o = 0; o < 21; o++) {
 						
 						scheduler(o);
@@ -107,6 +108,8 @@ public class controller {
 							}
 						System.out.println("");
 						}
+					v.setTablerray(m.getmodel());
+					v.getDTM().fireTableDataChanged();
 					}				
 			});
 		
@@ -116,7 +119,6 @@ public class controller {
 		try {
 			TimeUnit. SECONDS. sleep(x);
 		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	}
@@ -127,14 +129,33 @@ public class controller {
 		m.setinhalt(4, time, text3);
 	}	
 	
-	public void scheduler(int o) {
+	public void scheduler(int p) {
 		
 		System.out.print(m.getProzesse(0).rechnetSeit);
 		System.out.print(m.getProzesse(1).rechnetSeit);
 		System.out.print(m.getProzesse(2).rechnetSeit);
 		System.out.println();
 		
-		if(m.getProzesse(0).rechnetSeit != 5 && m.getProzesse(0).Priorität > m.getProzesse(1).Priorität && m.getProzesse(0).Priorität > m.getProzesse(2).Priorität && m.getProzesse(0).Rechenzeit1 != 0) {
+		int rechenzeitIstDa0 = m.getProzesse(0).Rechenzeit1 + m.getProzesse(0).Rechenzeit2 + m.getProzesse(0).Rechenzeit3;
+		int rechenzeitIstDa1 = m.getProzesse(1).Rechenzeit1 + m.getProzesse(1).Rechenzeit2 + m.getProzesse(1).Rechenzeit3;
+		int rechenzeitIstDa2 = m.getProzesse(2).Rechenzeit1 + m.getProzesse(2).Rechenzeit2 + m.getProzesse(2).Rechenzeit3;
+		
+		int werIstDran = 5;
+		
+		if(m.getProzesse(0).rechnetSeit < 5 && (m.getProzesse(0).Priorität >= m.getProzesse(1).Priorität) && (m.getProzesse(0).Priorität >= m.getProzesse(2).Priorität) && rechenzeitIstDa0 != 0) {
+			werIstDran = 0;
+		}
+		else if(m.getProzesse(1).rechnetSeit < 5 && (m.getProzesse(1).Priorität >= m.getProzesse(2).Priorität) && (m.getProzesse(1).Priorität >= m.getProzesse(0).Priorität) && rechenzeitIstDa1 != 0) {
+			werIstDran = 1;
+		}
+		else if(m.getProzesse(2).rechnetSeit < 5 && (m.getProzesse(2).Priorität >= m.getProzesse(0).Priorität) && (m.getProzesse(2).Priorität >= m.getProzesse(1).Priorität) && rechenzeitIstDa2 != 0) {
+			werIstDran = 2;
+		}
+		else {
+			werIstDran = 5;
+		}
+		
+		if(werIstDran == 0) {
 			
 			
 				m.getProzesse(0).setState("X");
@@ -148,17 +169,15 @@ public class controller {
 				m.getProzesse(1).resetRechnetSeit();
 				m.getProzesse(2).resetRechnetSeit();
 			
-				if(m.getProzesse(1).Wartezeit1 != 0 && m.getProzesse(1).Wartezeit2 != 0) {
-					m.getProzesse(1).setState("I");
+				if(m.getProzesse(1).Wartezeit2 != 0) {
 					m.getProzesse(1).verringereWartzeit();
 				}
-				else if(m.getProzesse(2).Wartezeit1 != 0 && m.getProzesse(2).Wartezeit2 != 0){
-					m.getProzesse(2).setState("I");
+				if(m.getProzesse(2).Wartezeit2 != 0){
 					m.getProzesse(2).verringereWartzeit();
 				}
 			
 		}
-		else if(m.getProzesse(1).rechnetSeit != 5 && m.getProzesse(1).Priorität > m.getProzesse(2).Priorität && m.getProzesse(1).Priorität > m.getProzesse(0).Priorität && m.getProzesse(1).Rechenzeit1 != 0) {
+		else if(werIstDran == 1) {
 
 			
 				m.getProzesse(0).setState("O");
@@ -168,22 +187,19 @@ public class controller {
 				m.getProzesse(1).verringereRechenzeit();
 			
 				m.getProzesse(1).erhöheRechnetSeit();
-				m.getProzesse(1).veringerePrio();
 				
 				m.getProzesse(0).resetRechnetSeit();
 				m.getProzesse(2).resetRechnetSeit();
 			
-				if(m.getProzesse(0).Wartezeit1 != 0 && m.getProzesse(0).Wartezeit2 != 0) {
-					m.getProzesse(0).setState("I");
+				if(m.getProzesse(0).Wartezeit2 != 0) {
 					m.getProzesse(0).verringereWartzeit();
 				}
-				else if(m.getProzesse(2).Wartezeit1 != 0 && m.getProzesse(2).Wartezeit2 != 0){
-					m.getProzesse(2).setState("I");
+				if(m.getProzesse(2).Wartezeit2 != 0){
 					m.getProzesse(2).verringereWartzeit();
 				}
 			
 		}
-		else if(m.getProzesse(2).rechnetSeit != 5 && m.getProzesse(2).Priorität > m.getProzesse(0).Priorität && m.getProzesse(2).Priorität > m.getProzesse(1).Priorität && m.getProzesse(2).Rechenzeit1 != 0) {
+		else if(werIstDran == 2) {
 
 			
 				m.getProzesse(0).setState("O");
@@ -193,31 +209,35 @@ public class controller {
 				m.getProzesse(2).verringereRechenzeit();
 			
 				m.getProzesse(2).erhöheRechnetSeit();
-				m.getProzesse(2).veringerePrio();
 				
 				m.getProzesse(1).resetRechnetSeit();
 				m.getProzesse(0).resetRechnetSeit();
 			
-				if(m.getProzesse(1).Wartezeit1 != 0 && m.getProzesse(1).Wartezeit2 != 0) {
-				m.getProzesse(1).setState("I");
+				if(m.getProzesse(1).Wartezeit2 != 0) {
 				m.getProzesse(1).verringereWartzeit();
 				}
-				else if(m.getProzesse(0).Wartezeit1 != 0 && m.getProzesse(0).Wartezeit2 != 0){
-					m.getProzesse(0).setState("I");
+				if(m.getProzesse(0).Wartezeit2 != 0){
 					m.getProzesse(0).verringereWartzeit();
 				}
 		}
-		if(o !=  0) {
-			if(m.getProzesse(0).state != "X" && m.getinhalt(0, o-1) == "X") {
+		else {
+			m.getProzesse(0).setState("O");
+			m.getProzesse(1).setState("O");
+			m.getProzesse(2).setState("O");
+		}
+		if(p !=  0) {
+			if(werIstDran != 0 && m.getinhalt(0, p-1) == "X") {
 				m.getProzesse(0).veringerePrio();
+				m.setinhalt(1, p-1, ""+m.getProzesse(0).Priorität+"");
 			}
-			if(m.getProzesse(1).state != "X" && m.getinhalt(2, o-1) == "X") {
+			if(werIstDran != 1 && m.getinhalt(2, p-1) == "X") {
 				m.getProzesse(1).veringerePrio();
+				m.setinhalt(3, p-1, ""+m.getProzesse(1).Priorität+"");
 			}
-			if(m.getProzesse(2).state != "X" && m.getinhalt(4, o-1) == "X") {
+			if(werIstDran != 2 && m.getinhalt(4, p-1) == "X") {
 				m.getProzesse(2).veringerePrio();
+				m.setinhalt(5, p-1, ""+m.getProzesse(2).Priorität+"");
 			}
 		}
 	}
-
 }

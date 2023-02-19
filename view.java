@@ -16,6 +16,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 public class view extends JFrame {
 	private JButton AddProcessBTN; 
@@ -76,14 +77,7 @@ public class view extends JFrame {
 		splitPane_1.setRightComponent(panel_3);
 		panel_3.setLayout(null);
 		DTM = new DefaultTableModel(
-				new String[][] {
-					{".", ".",".", ".",".", ".",".", ".",".", ".",".", ".",".", ".",".", ".",".", ".",".", ".","."},
-					{"-", "-","-", "-","-", "-","-", "-","-", "-","-", "-","-", "-","-", "-","-", "-","-", "-","-"},
-					{".", ".",".", ".",".", ".",".", ".",".", ".",".", ".",".", ".",".", ".",".", ".",".", ".","."},
-					{"-", "-","-", "-","-", "-","-", "-","-", "-","-", "-","-", "-","-", "-","-", "-","-", "-","-"},
-					{".", ".",".", ".",".", ".",".", ".",".", ".",".", ".",".", ".",".", ".",".", ".",".", ".","."},
-					{"-", "-","-", "-","-", "-","-", "-","-", "-","-", "-","-", "-","-", "-","-", "-","-", "-","-"}
-				},
+				null,
 				new String[] {
 						"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"
 
@@ -318,6 +312,15 @@ public class view extends JFrame {
 				new String[] {
 					"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"
 				});
+	}
+	public void setTablerray(String[][] inhalt) {
+		TableModel neuesModel = new DefaultTableModel(
+				inhalt,
+				new String[] {
+						"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"
+
+				});
+		table.setModel(neuesModel); 
 	}
 }
 
