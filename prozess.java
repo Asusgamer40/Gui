@@ -10,6 +10,7 @@ public class prozess {
 	public int Rechenzeit3;
 	public String state;
 	public int rechnetSeit;
+	public boolean fertig;
 
 	public prozess(String name, int w1, int w2, int r1, int r2, int r3, int prio) {
 		this.Prozessname = name;
@@ -31,7 +32,7 @@ public class prozess {
 		rechnetSeit = 0;
 	}
 	public void veringerePrio() {
-		Priorität = Priorität-2;
+		Priorität = Priorität -2;
 	}
 	public void verringereWartzeit() {
 		if(Rechenzeit1 == 0) {
@@ -58,19 +59,26 @@ public class prozess {
 			Rechenzeit1--;
 			if(Rechenzeit1 == 0) {
 				rechnetSeit = 5;
+				Priorität = Priorität -2;
 			}
 		}
-		else if (Rechenzeit2 != 0){
+		else if (Rechenzeit2 != 0 && Wartezeit1 == 0){
 			Rechenzeit2--;
 			if(Rechenzeit2 == 0) {
 				rechnetSeit = 5;
+				Priorität = Priorität -2;
 			}
 		}
-		else if(Rechenzeit3 != 0) {
+		else if(Rechenzeit3 != 0 && Wartezeit2 == 0) {
 			Rechenzeit3--;
 			if(Rechenzeit3 == 0) {
 				rechnetSeit = 5;
+				Priorität = Priorität -2;
 			}
 		}
+	}
+	public void letzterprozess() {
+		verringereWartzeit();
+		verringereRechenzeit();
 	}
 }
