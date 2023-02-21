@@ -39,6 +39,14 @@ public class controller {
 		
 		v.getAddProcessBTN_1().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
+				a = 0;
+				
+				m.setProzesse(new prozess("",0,0,0,0,0,0));
+				m.setProzesse(new prozess("",0,0,0,0,0,0));
+				m.setProzesse(new prozess("",0,0,0,0,0,0));
+				
+				m.getProzessearray().clear();
 			}
 				
 		});
@@ -177,14 +185,34 @@ public class controller {
 			werIstDran = 10;
 			if(rechenzeitIstDa2+wartezeitIstDa2 != 0) {
 				
-				m.getProzesse(0).setState("O");
 				m.getProzesse(1).setState("O");
+				m.getProzesse(2).setState("O");
+				m.getProzesse(0).setState("O");
 				
-					m.getProzesse(2).verringereRechenzeit();
-					m.getProzesse(2).verringereWartzeit();
+				if(m.getProzesse(0).Rechenzeit1 != 0) {
+					m.getProzesse(0).verringereRechenzeit();
+					m.getProzesse(0).setState("X");
+				}
+				else if(m.getProzesse(0).Wartezeit1 != 0) {
+					m.getProzesse(0).verringereWartzeit();
+					m.getProzesse(0).setState("I");
+				}
+				else if(m.getProzesse(0).Rechenzeit2 != 0) {
+					m.getProzesse(0).verringereRechenzeit();
+					m.getProzesse(0).setState("X");
+				}
+				else if(m.getProzesse(0).Wartezeit2 != 0) {
+					m.getProzesse(0).verringereWartzeit();
+					m.getProzesse(0).setState("I");
+				}
+				else if(m.getProzesse(0).Rechenzeit3 != 0) {
+					m.getProzesse(0).verringereRechenzeit();
+					m.getProzesse(0).setState("X");
+				}
 			}
 			else if(rechenzeitIstDa1+wartezeitIstDa1 != 0) {
 				
+				m.getProzesse(1).setState("O");
 				m.getProzesse(0).setState("O");
 				m.getProzesse(2).setState("O");
 				
@@ -211,11 +239,30 @@ public class controller {
 			}
 			else {
 				
-				m.getProzesse(1).setState("O");
 				m.getProzesse(2).setState("O");
+				m.getProzesse(0).setState("O");
+				m.getProzesse(1).setState("O");
 				
-					m.getProzesse(0).verringereRechenzeit();
-					m.getProzesse(0).verringereWartzeit();				
+				if(m.getProzesse(2).Rechenzeit1 != 0) {
+					m.getProzesse(2).verringereRechenzeit();
+					m.getProzesse(2).setState("X");
+				}
+				else if(m.getProzesse(2).Wartezeit1 != 0) {
+					m.getProzesse(2).verringereWartzeit();
+					m.getProzesse(2).setState("I");
+				}
+				else if(m.getProzesse(2).Rechenzeit2 != 0) {
+					m.getProzesse(2).verringereRechenzeit();
+					m.getProzesse(2).setState("X");
+				}
+				else if(m.getProzesse(2).Wartezeit2 != 0) {
+					m.getProzesse(2).verringereWartzeit();
+					m.getProzesse(2).setState("I");
+				}
+				else if(m.getProzesse(2).Rechenzeit3 != 0) {
+					m.getProzesse(2).verringereRechenzeit();
+					m.getProzesse(2).setState("X");
+				}				
 			}
 		}
 		
@@ -286,17 +333,6 @@ public class controller {
 					
 		}
 		
-		if(p !=  0) {
-			if(werIstDran != 0 && m.getinhalt(0, p-1) == "X" && m.getProzesse(0).anzeigePrio == true) {
-				m.setinhalt(1, p-1, ""+m.getProzesse(0).Priorität+"");
-			}
-			else if(werIstDran != 1 && m.getinhalt(2, p-1) == "X" && m.getProzesse(1).anzeigePrio == true) {
-				m.setinhalt(3, p-1, ""+m.getProzesse(1).Priorität+"");
-			}
-			else if(werIstDran != 2 && m.getinhalt(4, p-1) == "X" && m.getProzesse(2).anzeigePrio == true) {
-				m.setinhalt(5, p-1, ""+m.getProzesse(2).Priorität+"");
-			}
-		}
 		
 		if(rechenzeitIstDa0 == 0) {
 			m.getProzesse(0).Priorität = 0;
@@ -310,6 +346,20 @@ public class controller {
 			m.getProzesse(2).Priorität = 0;
 				m.getProzesse(2).fertig = true;
 		}
+		
+		
+		if(p !=  0) {
+			if(werIstDran != 0 && m.getinhalt(0, p-1) == "X" && m.getProzesse(0).anzeigePrio == true) {
+				m.setinhalt(1, p-1, ""+m.getProzesse(0).Priorität+"");
+			}
+			else if(werIstDran != 1 && m.getinhalt(2, p-1) == "X" && m.getProzesse(1).anzeigePrio == true) {
+				m.setinhalt(3, p-1, ""+m.getProzesse(1).Priorität+"");
+			}
+			else if(werIstDran != 2 && m.getinhalt(4, p-1) == "X" && m.getProzesse(2).anzeigePrio == true) {
+				m.setinhalt(5, p-1, ""+m.getProzesse(2).Priorität+"");
+			}
+		}
+		
 		
 		if(m.getProzesse(0).fertig && m.getProzesse(1).fertig && m.getProzesse(2).fertig) {
 			m.getProzesse(0).setState("O");
