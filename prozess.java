@@ -14,6 +14,9 @@ public class prozess {
 	public boolean fertig;
 	public boolean anzeigePrio;
 	public boolean prioMinus;
+	public int zeitSeitLetztemRechnen = 0;
+	public boolean angefangen = false;
+	public boolean prozessorEntzogen;
 
 	public prozess(String name, int w1, int w2, int r1, int r2, int r3, int prio) {
 		this.Prozessname = name;
@@ -31,11 +34,13 @@ public class prozess {
 	public void erhöheRechnetSeit() {
 		rechnetSeit++;
 	}
+	
 	public void resetRechnetSeit() {
 		rechnetSeit = 0;
 	}
 	public void verringereWartzeit() {
 		if(Rechenzeit1 == 0 && Rechenzeit2 != 0) {
+			zeitSeitLetztemRechnen++;
 			if(Wartezeit1 != 0) {
 				Wartezeit1--;
 				state = "I";
@@ -50,6 +55,7 @@ public class prozess {
 			}
 		}
 		else if(Rechenzeit2 == 0) {
+			zeitSeitLetztemRechnen++;
 			if(Wartezeit2 != 0){
 				Wartezeit2--;
 				state = "I";
@@ -65,11 +71,20 @@ public class prozess {
 		}
 	}
 	public void verringereRechenzeit() {
+		zeitSeitLetztemRechnen = 0;
+		angefangen = true;
 		if(Rechenzeit1 != 0) {
 			anzeigePrio = false;
 			Rechenzeit1--;
 			prioMinus = false;
+			prozessorEntzogen = false;
 			if(Rechenzeit1 == 0) {
+				if(rechnetSeit == 5) {
+					prozessorEntzogen = true;
+				}
+				else {
+					prozessorEntzogen = false;
+				}
 				anzeigePrio = true;
 				rechnetSeit = 5;
 				Priorität--;
@@ -77,6 +92,7 @@ public class prozess {
 				prioMinus = true;
 			}
 			else if(rechnetSeit == 5 && prioMinus == false) {
+				prozessorEntzogen = true;
 				anzeigePrio = true;
 				Priorität--;
 				Priorität--;
@@ -86,7 +102,14 @@ public class prozess {
 			anzeigePrio = false;
 			Rechenzeit2--;
 			prioMinus = false;
+			prozessorEntzogen = false;
 			if(Rechenzeit2 == 0) {
+				if(rechnetSeit == 5) {
+					prozessorEntzogen = true;
+				}
+				else {
+					prozessorEntzogen = false;
+				}
 				anzeigePrio = true;
 				rechnetSeit = 5;
 				Priorität--;
@@ -94,6 +117,7 @@ public class prozess {
 				prioMinus = true;
 			}
 			else if(rechnetSeit == 5 && prioMinus == false) {
+				prozessorEntzogen = true;
 				anzeigePrio = true;
 				Priorität--;
 				Priorität--;
@@ -103,7 +127,14 @@ public class prozess {
 			anzeigePrio = false;
 			Rechenzeit3--;
 			prioMinus = false;
+			prozessorEntzogen = false;
 			if(Rechenzeit3 == 0) {
+				if(rechnetSeit == 5) {
+					prozessorEntzogen = true;
+				}
+				else {
+					prozessorEntzogen = false;
+				}
 				anzeigePrio = true;
 				rechnetSeit = 5;
 				Priorität--;
@@ -111,6 +142,7 @@ public class prozess {
 				prioMinus = true;
 			}
 			else if(fertig) {
+				prozessorEntzogen = true;
 				anzeigePrio = true;
 				Priorität--;
 				Priorität--;

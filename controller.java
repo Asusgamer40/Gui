@@ -8,6 +8,9 @@ public class controller {
 	
 	int o;
 	int a;
+	boolean wartetAmLaengsten0 = false;
+	boolean wartetAmLaengsten1 = false;
+	boolean wartetAmLaengsten2 = false;
 	private view v;
 	private model m;
 	private int werIstDran;
@@ -60,7 +63,7 @@ public class controller {
 								
 				if(v.getcomboBox_1().getSelectedIndex() != 0 && v.getcomboBox().getSelectedIndex() != 0 && v.gettxtprocessname().getText() != "") {
 						if(a < 3) {
-							prozess p1 = new prozess(v.gettxtprocessname().getText(), v.getcomboBox_2().getSelectedIndex()-1, v.getcomboBox_4().getSelectedIndex()-1, v.getcomboBox_1().getSelectedIndex(), v.getcomboBox_3().getSelectedIndex()-1, v.getcomboBox_5().getSelectedIndex()-1, v.getcomboBox().getSelectedIndex());
+							prozess p1 = new prozess(v.gettxtprocessname().getText(), v.getcomboBox_2().getSelectedIndex()-1, v.getcomboBox_5().getSelectedIndex()-1, v.getcomboBox_1().getSelectedIndex(), v.getcomboBox_3().getSelectedIndex()-1, v.getcomboBox_4().getSelectedIndex()-1, v.getcomboBox().getSelectedIndex());
 							m.setProzesse(p1);
 							m.getProzesse(a).resetRechnetSeit();
 							a++;		
@@ -98,6 +101,8 @@ public class controller {
 		v.getrunBTN().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 					
+				v.getinternalFrame().setVisible(false);
+				
 					for(o = 0; o < 21; o++) {
 						
 						scheduler(o);
@@ -155,15 +160,41 @@ public class controller {
 		int wartezeitIstDa1 = m.getProzesse(1).Wartezeit1 + m.getProzesse(1).Wartezeit2;
 		int wartezeitIstDa2 = m.getProzesse(2).Wartezeit1 + m.getProzesse(2).Wartezeit2;
 		
+		/*
+		int wartezeitSeitLetztemX0 = m.getProzesse(0).zeitSeitLetztemRechnen;
+		int wartezeitSeitLetztemX1 = m.getProzesse(1).zeitSeitLetztemRechnen;
+		int wartezeitSeitLetztemX2 = m.getProzesse(2).zeitSeitLetztemRechnen;
+		
+		if(m.getProzesse(0).prozessorEntzogen || m.getProzesse(1).prozessorEntzogen || m.getProzesse(2).prozessorEntzogen) {
+			if(m.getProzesse(0).angefangen && wartezeitSeitLetztemX0 > wartezeitSeitLetztemX1 && wartezeitSeitLetztemX0 > wartezeitSeitLetztemX2 && m.getProzesse(1).rechnetSeit == 5 || wartezeitSeitLetztemX0 > wartezeitSeitLetztemX1 && wartezeitSeitLetztemX0 > wartezeitSeitLetztemX2 && m.getProzesse(2).rechnetSeit == 5 ) {
+			wartetAmLaengsten0 = true;
+			wartetAmLaengsten1 = false;
+			wartetAmLaengsten2 = false;
+		}
+		else if(m.getProzesse(1).angefangen && wartezeitSeitLetztemX1 > wartezeitSeitLetztemX0 && wartezeitSeitLetztemX1 > wartezeitSeitLetztemX2 && m.getProzesse(0).rechnetSeit == 5 || wartezeitSeitLetztemX1 > wartezeitSeitLetztemX0 && wartezeitSeitLetztemX1 > wartezeitSeitLetztemX2 && m.getProzesse(2).rechnetSeit == 5 ) {
+			wartetAmLaengsten1 = true;
+			wartetAmLaengsten0 = false;
+			wartetAmLaengsten2 = false;
+		}
+		else if(m.getProzesse(2).angefangen && wartezeitSeitLetztemX2 > wartezeitSeitLetztemX1 && wartezeitSeitLetztemX2 > wartezeitSeitLetztemX0 && m.getProzesse(1).rechnetSeit == 5 || wartezeitSeitLetztemX2 > wartezeitSeitLetztemX1 && wartezeitSeitLetztemX2 > wartezeitSeitLetztemX0 && m.getProzesse(0).rechnetSeit == 5 ) {
+			wartetAmLaengsten2 = true;
+			wartetAmLaengsten0 = false;
+			wartetAmLaengsten1 = false;
+		}
+		}
+			wartetAmLaengsten2 = false;
+			wartetAmLaengsten0 = false;
+			wartetAmLaengsten1 = false;
+*/		
 
 		if(!m.getProzesse(0).fertig && !m.getProzesse(1).fertig || !m.getProzesse(0).fertig && !m.getProzesse(2).fertig || !m.getProzesse(2).fertig && !m.getProzesse(1).fertig) {
-			if(m.getProzesse(0).wartetSeit < 5 && m.getProzesse(0).rechnetSeit < 5 && m.getProzesse(0).Priorität >= m.getProzesse(1).Priorität && m.getProzesse(0).Priorität >= m.getProzesse(2).Priorität && rechenzeitIstDa0 != 0) {
+			if(m.getProzesse(0).wartetSeit < 5 && m.getProzesse(0).rechnetSeit < 5 && m.getProzesse(0).Priorität >= m.getProzesse(1).Priorität && m.getProzesse(0).Priorität >= m.getProzesse(2).Priorität && rechenzeitIstDa0 != 0 || wartetAmLaengsten0  && m.getProzesse(0).wartetSeit < 5) {
 				werIstDran = 0;
 			}
-			else if(m.getProzesse(1).wartetSeit < 5 && m.getProzesse(1).rechnetSeit < 5 && m.getProzesse(1).Priorität >= m.getProzesse(2).Priorität && m.getProzesse(1).Priorität >= m.getProzesse(0).Priorität && rechenzeitIstDa1 != 0) {
+			else if(m.getProzesse(1).wartetSeit < 5 && m.getProzesse(1).rechnetSeit < 5 && m.getProzesse(1).Priorität >= m.getProzesse(2).Priorität && m.getProzesse(1).Priorität >= m.getProzesse(0).Priorität && rechenzeitIstDa1 != 0|| wartetAmLaengsten1  && m.getProzesse(1).wartetSeit < 5) {
 				werIstDran = 1;
 			}
-			else if(m.getProzesse(2).wartetSeit < 5 && m.getProzesse(2).rechnetSeit < 5 && m.getProzesse(2).Priorität >= m.getProzesse(0).Priorität && m.getProzesse(2).Priorität >= m.getProzesse(1).Priorität && rechenzeitIstDa2 != 0) {
+			else if(m.getProzesse(2).wartetSeit < 5 && m.getProzesse(2).rechnetSeit < 5 && m.getProzesse(2).Priorität >= m.getProzesse(0).Priorität && m.getProzesse(2).Priorität >= m.getProzesse(1).Priorität && rechenzeitIstDa2 != 0 || wartetAmLaengsten2  && m.getProzesse(2).wartetSeit < 5) {
 				werIstDran = 2;
 			}
 			else {
@@ -183,7 +214,7 @@ public class controller {
 		}
 		else {
 			werIstDran = 10;
-			if(rechenzeitIstDa2+wartezeitIstDa2 != 0) {
+			if(rechenzeitIstDa0+wartezeitIstDa0 != 0) {
 				
 				m.getProzesse(1).setState("O");
 				m.getProzesse(2).setState("O");
@@ -215,6 +246,8 @@ public class controller {
 				m.getProzesse(1).setState("O");
 				m.getProzesse(0).setState("O");
 				m.getProzesse(2).setState("O");
+				
+				System.out.println(m.getProzesse(1).Wartezeit2);
 				
 				if(m.getProzesse(1).Rechenzeit1 != 0) {
 					m.getProzesse(1).verringereRechenzeit();
@@ -337,14 +370,20 @@ public class controller {
 		if(rechenzeitIstDa0 == 0) {
 			m.getProzesse(0).Priorität = 0;
 				m.getProzesse(0).fertig = true;
+				m.getProzesse(0).rechnetSeit = 5;
+				//wartezeitSeitLetztemX0 = 0;
 		}
 		if(rechenzeitIstDa1 == 0) {
 			m.getProzesse(1).Priorität = 0;
 				m.getProzesse(1).fertig = true;
+				m.getProzesse(1).rechnetSeit = 5;
+				//wartezeitSeitLetztemX1 = 0;
 		}
 		if(rechenzeitIstDa2 == 0) {
 			m.getProzesse(2).Priorität = 0;
 				m.getProzesse(2).fertig = true;
+				m.getProzesse(2).rechnetSeit = 5;
+				//wartezeitSeitLetztemX2 = 0;
 		}
 		
 		
